@@ -1,0 +1,20 @@
+/*---------------------------------------------------
+    LESS Elements 0.9
+  ---------------------------------------------------
+    A set of useful LESS mixins
+    More info at: http://lesselements.com
+  ---------------------------------------------------*/
+.jira .frame.open {
+  display: block;
+}
+.jira .login .cont {
+  text-align: center;
+  width: 400px;
+  margin: 0 auto;
+  padding: 20px;
+  border: 1px #ccc solid;
+  margin-top: 100px;
+  -webkit-border-radius: 10px;
+  -moz-border-radius: 10px;
+  border-radius: 10px;
+}

@@ -1,0 +1,33 @@
+{
+  "name": "jira-tools",
+  "version": "0.1.0",
+  "description": "jira-tools ==========",
+  "main": "bin/www",
+  "dependencies": {
+    "ejs": "^0.8.8",
+    "cookie-parser": "^1.0.1",
+    "debug": "^0.7.4",
+    "express-session": "^1.8.2",
+    "express": "^4.0.0",
+    "jira": "^0.9.2",
+    "body-parser": "^1.0.2",
+    "static-favicon": "^1.0.2",
+    "less-middleware": "^0.1.15",
+    "morgan": "^1.0.1",
+    "when": "^3.4.6"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/phariel/jira-tools.git"
+  },
+  "author": "Phil Peng",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/phariel/jira-tools/issues"
+  },
+  "homepage": "https://github.com/phariel/jira-tools"
+}

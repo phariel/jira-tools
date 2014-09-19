@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html ng-app="jiraHelper">
+<head>
+    <title>Jira Tools</title>
+    <link rel='stylesheet' href='/styles/bootstrap.min.css'/>
+    <link rel='stylesheet' href='/styles/style.css'/>
+    <script type="text/javascript" src="/scripts/angular.min.js"></script>
+    <script type="text/javascript" src="/scripts/main.js"></script>
+</head>
+<body class="jira">
+<div class="login frame <%= (logined) ? 'ng-hide' : '' %>" ng-show="!configVisible">
+    <div class="cont">
+        <form role="form" ng-controller="loginCtrl" novalidate>
+            <div class="form-group">
+                <input type="text" class="form-control" placeholder="Username" ng-model="user.username"/>
+            </div>
+            <div class="form-group">
+                <input type="password" class="form-control" placeholder="Password" ng-model="user.password"/>
+            </div>
+
+            <button type="submit" class="btn btn-default" ng-click="login()">Submit</button>
+            <span ng-bind="configVisible"></span>
+        </form>
+    </div>
+</div>
+<div ng-show="configVisible" class="frame config">
+    config
+</div>
+</body>
+</html>
