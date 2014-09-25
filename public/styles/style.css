@@ -4,16 +4,43 @@
     A set of useful LESS mixins
     More info at: http://lesselements.com
   ---------------------------------------------------*/
-.jira .frame.open {
-  display: block;
+.jira .login-fail {
+  padding: 20px;
+}
+.jira .child-center {
+  text-align: center;
+}
+.jira .child-frame {
+  padding: 10px;
 }
 .jira .login .cont {
   text-align: center;
   width: 400px;
   margin: 0 auto;
   padding: 20px;
-  border: 1px #ccc solid;
   margin-top: 100px;
+  border: 1px #ccc solid;
+  -webkit-border-radius: 10px;
+  -moz-border-radius: 10px;
+  border-radius: 10px;
+}
+.jira .release-search {
+  width: 600px;
+  margin: 100px auto 0 auto;
+  padding: 20px;
+  border: 1px #ccc solid;
+  -webkit-border-radius: 10px;
+  -moz-border-radius: 10px;
+  border-radius: 10px;
+}
+.jira .release-search .fix-version {
+  width: 200px;
+  margin: 0 auto;
+}
+.jira .release-search .team-item {
+  margin: 0 5px;
+  padding: 5px 10px;
+  border: 1px #ccc solid;
   -webkit-border-radius: 10px;
   -moz-border-radius: 10px;
   border-radius: 10px;
