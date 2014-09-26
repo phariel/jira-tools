@@ -18,6 +18,27 @@ var jiraHelper = {
 				}
 			});
 		});
+	},
+	login: function (username, password) {
+		this.init(username, password);
+		return when.promise(function (resolve) {
+			jira.getCurrentUser(function (err) {
+				resolve(!err);
+			});
+		});
+	},
+	getReleaseList: function (fixversion) {
+		return when.promise(function (resolve) {
+			jira.searchJira(
+					'project in (SPC, SD) AND fixVersion = "' + fixversion + '"',
+				['issuekey', 'summary', 'assignee', 'reporter', 'priority', 'status'],
+				function (err, data) {
+					resolve({
+						success: !err,
+						items: data
+					});
+				});
+		});
 	}
 };
 

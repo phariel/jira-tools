@@ -5,10 +5,11 @@
     <link rel='stylesheet' href='/styles/bootstrap.min.css'/>
     <link rel='stylesheet' href='/styles/style.css'/>
     <script type="text/javascript" src="/scripts/angular.min.js"></script>
+    <script type="text/javascript" src="/scripts/angular-bootstrap.min.js"></script>
     <script type="text/javascript" src="/scripts/main.js"></script>
 </head>
-<body class="jira">
-<div class="login frame <%= (logined) ? 'ng-hide' : '' %>" ng-show="!configVisible">
+<body class="jira" ng-init="logined=<%= logined %>;">
+<div class="login frame" ng-show="!logined">
     <div class="cont">
         <form role="form" ng-controller="loginCtrl" novalidate>
             <div class="form-group">
@@ -17,14 +18,34 @@
             <div class="form-group">
                 <input type="password" class="form-control" placeholder="Password" ng-model="user.password"/>
             </div>
-
-            <button type="submit" class="btn btn-default" ng-click="login()">Submit</button>
+            <hr/>
+            <button type="submit" class="btn btn-primary" ng-click="login()">Submit</button>
             <span ng-bind="configVisible"></span>
         </form>
     </div>
+    <script type="text/ng-template" id="loginFail.html">
+        <div class="login-fail">
+            <h3>Login failed</h3>
+
+            <p>Please check your login information and try again.</p>
+            <hr/>
+            <div class="child-center">
+                <button class="btn btn-danger" ng-click="close()">GOT IT</button>
+            </div>
+        </div>
+    </script>
 </div>
-<div ng-show="configVisible" class="frame config">
-    config
+<div ng-show="logined" class="frame main-frame">
+    <div class="release-search child-center" ng-controller="releaseSearch">
+        <input type="text" ng-model="fixversion" typeahead="item for item in items | filter:$viewValue | limitTo:8"
+               placeholder="Input fix version here" class="form-control fix-version"/>
+
+        <hr/>
+
+        <span class="team-item">School PC</span><span class="team-item">School Dragon</span>
+        <hr />
+        <button class="btn btn-primary" ng-click="generate()" ng-show="!generating">Generate</button>
+    </div>
 </div>
 </body>
 </html>

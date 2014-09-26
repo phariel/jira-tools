@@ -1,20 +1,45 @@
 @import "elements.less";
 
 .jira {
-	.frame {
-		&.open{
-			display: block;
-		}
+	.login-fail {
+		padding: 20px;
 	}
 
-	.login{
-		.cont{
+	.child-center {
+		text-align: center;
+	}
+	.child-frame{
+		padding: 10px;
+	}
+
+	.login {
+		.cont {
 			text-align: center;
 			width: 400px;
 			margin: 0 auto;
 			padding: 20px;
-			border: 1px #ccc solid;
 			margin-top: 100px;
+			border: 1px #ccc solid;
+			.rounded(10px);
+		}
+	}
+
+	.release-search{
+		width: 270px;
+		margin: 100px auto 0 auto;
+		padding: 20px;
+		border: 1px #ccc solid;
+		.rounded(10px);
+
+		.fix-version{
+			width: 200px;
+			margin: 0 auto;
+		}
+
+		.team-item{
+			margin: 0 5px;
+			padding: 5px 10px;
+			border: 1px #ccc solid;
 			.rounded(10px);
 		}
 	}
