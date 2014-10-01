@@ -30,12 +30,13 @@ var jiraHelper = {
 	getReleaseList: function (fixversion) {
 		return when.promise(function (resolve) {
 			jira.searchJira(
-					'project in (SPC, SD) AND fixVersion = "' + fixversion + '"',
+					'project in (SPC, SD) AND issuetype = Story AND fixVersion = "' + fixversion + '"',
 				['issuekey', 'summary', 'assignee', 'reporter', 'priority', 'status'],
 				function (err, data) {
 					resolve({
 						success: !err,
-						items: data
+						items: data,
+						fixversion: fixversion
 					});
 				});
 		});
