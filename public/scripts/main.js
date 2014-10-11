@@ -22,7 +22,7 @@ angular.module('jiraHelper', ['ui.bootstrap'])
 			});
 		};
 	}])
-	.controller('releaseSearch', ['$scope', '$http', function ($scope, $http) {
+	.controller('releaseSearch', ['$scope', '$http', '$modal', function ($scope, $http, $modal) {
 		$scope.items = [
 			'42-1 10/15/2014',
 			'45-1 11/5/2014',
@@ -45,11 +45,31 @@ angular.module('jiraHelper', ['ui.bootstrap'])
 				});
 			}
 		};
+		var exportSuccessCtrl = function ($scope, $modalInstance, emailAddress) {
+			$scope.emailAddress = emailAddress;
+			$scope.close = function () {
+				$modalInstance.dismiss('cancel');
+			};
+		};
 		$scope.exportMail = function () {
-			var body = document.getElementById("list").innerHTML;
-			var link = 'mailto:ETSchool.PC@ef.com,ETSchool.Dragon@ef.com';
-			link += '?subject=' + $scope.fixversion + ' Release GL Reminder';
-			link += '&body=' + encodeURIComponent(body);
-			window.location.href = link;
+			$scope.exporting = true;
+			$http.post('/release/export', {
+				subject: $scope.fixversion + ' Release GL Reminder',
+				mainbody: encodeURIComponent(document.getElementById("list").innerHTML)
+			}).success(function (data) {
+				$scope.exporting = false;
+				if (data.success) {
+					$modal.open({
+						templateUrl: 'exportSuccess.html',
+						size: 'sm',
+						controller: exportSuccessCtrl,
+						resolve: {
+							emailAddress: function () {
+								return data.emailAddress;
+							}
+						}
+					});
+				}
+			});
 		};
 	}]);

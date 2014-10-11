@@ -1,4 +1,5 @@
 var jiraHelper = require('../utility/jira-helper');
+var mailHelper = require('../utility/mail-helper')
 var router = require('express').Router();
 
 router.get('/', function (req, res) {
@@ -41,6 +42,23 @@ router.post('/release/get', function (req, res) {
 router.get('/issue/:id', function (req, res) {
 	jiraHelper.issue(req.params.id).then(function (issue) {
 		res.json(issue);
+	});
+});
+
+router.post('/release/export', function (req, res) {
+	jiraHelper.getCurrentUser().then(function (user) {
+		if (user.success) {
+			mailHelper.mail(user.data.emailAddress,
+				req.body.subject,
+				req.body.mainbody
+			).then(function (status) {
+					res.json(status);
+				});
+		} else {
+			res.json({
+				success: false
+			})
+		}
 	});
 });
 

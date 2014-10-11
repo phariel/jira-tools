@@ -2,6 +2,7 @@ var when = require('when');
 var jiraLib = require('jira');
 
 var jira;
+var UNDEF;
 
 var jiraHelper = {
 	init: function (acctemp, passtemp) {
@@ -39,6 +40,25 @@ var jiraHelper = {
 						fixversion: fixversion
 					});
 				});
+		});
+	},
+	getCurrentUser: function () {
+		return when.promise(function (resolve) {
+			jira.getCurrentUser(function (err, data) {
+				if (err) {
+					resolve({
+						success: !err
+					});
+				} else {
+					jira.searchUsers(data.name, UNDEF, UNDEF, UNDEF, UNDEF, function (err, users) {
+						resolve({
+							success: !err,
+							data: users[0]
+						});
+					});
+				}
+			});
+
 		});
 	}
 };
