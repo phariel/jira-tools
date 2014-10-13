@@ -4,9 +4,11 @@
 ##### How to use
 
 After:
+
 `$ git clone`
 
 Run:
+
 `$ npm install`
 
 `$ node bin/www`
