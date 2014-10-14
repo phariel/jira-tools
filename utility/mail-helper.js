@@ -1,18 +1,18 @@
 var nodemailer = require('nodemailer');
 var when = require('when');
+
 var transporter = nodemailer.createTransport({
-	host: 'smtp.163.com',
-	port: 25,
+	service: 'Yahoo',
 	auth: {
-		user: 'philmailserver@163.com',
-		pass: 'mailserver'
+		user: 'philmailserver@yahoo.com',
+		pass: 'ocmirjhirldzcdgu'
 	}
 });
 
 exports.mail = function (mailto, subject, body) {
 	return when.promise(function (resolve) {
 		transporter.sendMail({
-			from: 'GL Reminder <philmailserver@163.com>',
+			from: 'GL Reminder <philmailserver@yahoo.com>',
 			to: mailto,
 			subject: subject,
 			text: 'GL Reminder',
