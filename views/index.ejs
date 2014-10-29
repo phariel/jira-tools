@@ -1,111 +1,117 @@
 <!DOCTYPE html>
 <html ng-app="jiraHelper">
 <head>
-    <title>Jira Tools</title>
-    <link rel='stylesheet' href='/styles/bootstrap.min.css'/>
-    <link rel='stylesheet' href='/styles/style.css'/>
-    <script type="text/javascript" src="/scripts/angular.min.js"></script>
-    <script type="text/javascript" src="/scripts/angular-bootstrap.min.js"></script>
-    <script type="text/javascript" src="/scripts/main.js"></script>
+	<title>Jira Tools</title>
+	<link rel='stylesheet' href='/styles/bootstrap.min.css'/>
+	<link rel='stylesheet' href='/styles/style.css'/>
+	<script type="text/javascript" src="/scripts/angular.min.js"></script>
+	<script type="text/javascript" src="/scripts/angular-bootstrap.min.js"></script>
+	<script type="text/javascript" src="/scripts/main.js"></script>
 </head>
 <body class="jira" ng-init="logined=<%= logined %>;">
 <h2 class="child-center">GL Reminder For School</h2>
 
 <div class="login frame" ng-show="!logined">
-    <div class="cont">
-        <form role="form" ng-controller="loginCtrl" novalidate>
-            <div class="form-group">
-                <input type="text" ng-disabled="logging" class="form-control" placeholder="Your JIRA Username"
-                       ng-model="user.username"/>
-            </div>
-            <div class="form-group">
-                <input type="password" ng-disabled="logging" class="form-control" placeholder="Your JIRA Password"
-                       ng-model="user.password"/>
-            </div>
-            <hr/>
-            <button type="submit" ng-disabled="!user.username || !user.password" ng-show="!logging"
-                    class="btn btn-primary" ng-click="login()">Login
-            </button>
-            <progressbar ng-show="logging" class="progress-striped active" value="100" type="primary"><i></i>
-            </progressbar>
-        </form>
-    </div>
-    <script type="text/ng-template" id="loginFail.html">
-        <div class="login-fail">
-            <h3>Login Failed</h3>
+	<div class="cont">
+		<form role="form" ng-controller="loginCtrl" novalidate>
+			<div class="form-group">
+				<input type="text" ng-disabled="logging" class="form-control" placeholder="Your JIRA Username"
+				       ng-model="user.username"/>
+			</div>
+			<div class="form-group">
+				<input type="password" ng-disabled="logging" class="form-control" placeholder="Your JIRA Password"
+				       ng-model="user.password"/>
+			</div>
+			<hr/>
+			<button type="submit" ng-disabled="!user.username || !user.password" ng-show="!logging"
+			        class="btn btn-primary" ng-click="login()">Login
+			</button>
+			<progressbar ng-show="logging" class="progress-striped active" value="100" type="primary"><i></i>
+			</progressbar>
+		</form>
+	</div>
+	<script type="text/ng-template" id="loginFail.html">
+		<div class="login-fail">
+			<h3>Login Failed</h3>
 
-            <p>Please check your login information and try again.</p>
-            <hr/>
-            <div class="child-center">
-                <button class="btn btn-danger" ng-click="close()">GOT IT</button>
-            </div>
-        </div>
-    </script>
+			<p>Please check your login information and try again.</p>
+			<hr/>
+			<div class="child-center">
+				<button class="btn btn-danger" ng-click="close()">GOT IT</button>
+			</div>
+		</div>
+	</script>
 </div>
 <div ng-show="logined" class="frame main-frame" ng-controller="releaseSearch">
-    <div class="release-search child-center">
-        <form>
-            <input type="text" ng-model="fixversion" typeahead="item for item in items | filter:$viewValue | limitTo:8"
-                   placeholder="Input fix version here" class="form-control fix-version"/>
+	<div class="release-search child-center">
+		<form>
+			<input type="text" ng-model="fixversion" typeahead="item for item in items | filter:$viewValue | limitTo:8"
+			       placeholder="Input fix version here" class="form-control fix-version"/>
 
-            <hr/>
-            <span class="team-item">School PC</span><span class="team-item">School Dragon</span>
-            <hr/>
-            <button type="submit" class="btn btn-primary" ng-click="generate()" ng-show="!generating"
-                    ng-disabled="!fixversion">Generate
-            </button>
-            <progressbar ng-show="generating" class="progress-striped active" value="100" type="primary"><i></i>
-            </progressbar>
-        </form>
-    </div>
-    <div class="release-list" ng-show="list">
-        <div id="list">
-            <p class="mail-hidden" style="font-size: 14px;">Hi Guys:
-                <br/>
-                We have <span style="color: #0000ff;font-weight: bold;">{{total}}</span> stories should be released in
-                this
-                <span style="color:#880000;font-weight: bold;">{{listTitle}}</span> release plan.
-                <br/>
-                <span style="color:#f37021;font-weight: bold;">Please GL all stories before Code Freeze Day, thanks.</span>
-            </p>
-            <table border="1" cellpadding="0" cellspacing="0" style="font-size: 14px">
-                <tr>
-                    <th style="background: #dedede;padding:10px;">Key</th>
-                    <th style="background: #dedede;padding:10px;">Summary</th>
-                    <th style="background: #dedede;padding:10px;">Assignee</th>
-                    <th style="background: #dedede;padding:10px;">Reporter</th>
-                    <th style="background: #dedede;padding:10px;">Priority</th>
-                    <th style="background: #dedede;padding:10px;">status</th>
-                </tr>
-                <tr ng-repeat="item in list">
-                    <td style="padding: 10px;"><a href="https://jira.englishtown.com/browse/{{item.key}}"
-                                                  target="_blank">{{item.key}}</a></td>
-                    <td style="padding: 10px;">{{item.fields.summary}}</td>
-                    <td style="padding: 10px;">{{item.fields.assignee.displayName}}</td>
-                    <td style="padding: 10px;">{{item.fields.reporter.displayName}}</td>
-                    <td style="padding: 10px;">{{item.fields.priority.name}}</td>
-                    <td style="padding: 10px;">{{item.fields.status.name}}</td>
-                </tr>
-            </table>
-        </div>
-        <div class="child-center child-frame">
-            <button class="btn btn-danger" ng-show="!exporting" ng-click="exportMail()">Export & mail to your mailbox
-            </button>
-            <progressbar ng-show="exporting" class="progress-striped active export-progress" value="100" type="danger"><i></i>
-            </progressbar>
-            <script type="text/ng-template" id="exportSuccess.html">
-                <div class="login-fail">
-                    <h3>Export Success!</h3>
-                    <p>Mail had been sent to <span style="color: #ff0000;">{{emailAddress}}</span></p>
-                    <p>If you couldn't get this mail, please check your spam, thanks.</p>
-                    <hr/>
-                    <div class="child-center">
-                        <button class="btn btn-primary" ng-click="close()">GOT IT</button>
-                    </div>
-                </div>
-            </script>
-        </div>
-    </div>
+			<hr/>
+			<span class="team-item">School PC</span><span class="team-item">School Dragon</span>
+			<hr/>
+			<button type="submit" class="btn btn-primary" ng-click="generate()" ng-show="!generating"
+			        ng-disabled="!fixversion">Generate
+			</button>
+			<progressbar ng-show="generating" class="progress-striped active" value="100" type="primary"><i></i>
+			</progressbar>
+		</form>
+	</div>
+	<div class="release-list" ng-show="list">
+		<div id="list">
+			<p class="mail-hidden" style="font-size: 14px;">Hi Guys:
+				<br/>
+				We have <span style="color: #0000ff;font-weight: bold;">{{total}}</span> stories should be released in
+				this
+				<span style="color:#880000;font-weight: bold;">{{listTitle}}</span> release plan.
+				<br/>
+				<span style="color:#f37021;font-weight: bold;">Please GL all stories before Code Freeze Day, thanks.</span>
+			</p>
+			<table border="1" cellpadding="0" cellspacing="0" style="font-size: 14px">
+				<tr>
+					<th style="background: #dedede;padding:10px;">Key</th>
+					<th style="background: #dedede;padding:10px;">Summary</th>
+					<th style="background: #dedede;padding:10px;">Assignee</th>
+					<th style="background: #dedede;padding:10px;">QA</th>
+					<th style="background: #dedede;padding:10px;">Reporter</th>
+					<th style="background: #dedede;padding:10px;">Priority</th>
+					<th style="background: #dedede;padding:10px;">Status</th>
+				</tr>
+				<tr ng-repeat="item in list">
+					<td style="padding: 10px;">
+						<a href="https://jira.englishtown.com/browse/{{item.key}}" target="_blank">{{item.key}}</a>
+					</td>
+					<td style="padding: 10px;">{{item.fields.summary}}</td>
+					<td style="padding: 10px;">{{item.fields.assignee.displayName}}</td>
+					<td style="padding: 10px;">{{item.fields.customfield_10300.displayName}}</td>
+					<td style="padding: 10px;">{{item.fields.reporter.displayName}}</td>
+					<td style="padding: 10px;">{{item.fields.priority.name}}</td>
+					<td style="padding: 10px;">{{item.fields.status.name}}</td>
+				</tr>
+			</table>
+		</div>
+		<div class="child-center child-frame">
+			<button class="btn btn-danger" ng-show="!exporting" ng-click="exportMail()">Export & mail to your mailbox
+			</button>
+			<progressbar ng-show="exporting" class="progress-striped active export-progress" value="100" type="danger">
+				<i></i>
+			</progressbar>
+			<script type="text/ng-template" id="exportSuccess.html">
+				<div class="login-fail">
+					<h3>Export Success!</h3>
+
+					<p>Mail had been sent to <span style="color: #ff0000;">{{emailAddress}}</span></p>
+
+					<p>If you couldn't get this mail, please check your spam, thanks.</p>
+					<hr/>
+					<div class="child-center">
+						<button class="btn btn-primary" ng-click="close()">GOT IT</button>
+					</div>
+				</div>
+			</script>
+		</div>
+	</div>
 </div>
 </body>
 </html>
