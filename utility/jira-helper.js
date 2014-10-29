@@ -31,8 +31,8 @@ var jiraHelper = {
 	getReleaseList: function (fixversion) {
 		return when.promise(function (resolve) {
 			jira.searchJira(
-					'project in (SPC, SD) AND issuetype = Story AND fixVersion = "' + fixversion + '"',
-				['issuekey', 'summary', 'assignee', 'reporter', 'priority', 'status'],
+				'project in (SPC, SD) AND issuetype = Story AND fixVersion = "' + fixversion + '"',
+				['issuekey', 'summary', 'assignee', 'reporter', 'priority', 'status', 'customfield_10300'],
 				function (err, data) {
 					resolve({
 						success: !err,
