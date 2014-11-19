@@ -38,9 +38,19 @@ angular.module('jiraHelper', ['ui.bootstrap'])
 				}).success(function (data) {
 					$scope.generating = false;
 					if (data.success) {
-						$scope.list = data.items.issues;
+						var list = data.items.issues;
+						var newList = [];
+
+						// filter closed status
+						for (var i = 0; i < list.length; i++) {
+							if (list[i].fields.status.id != 6) {
+								newList.push(list[i]);
+							}
+						}
+						
+						$scope.list = newList;
 						$scope.listTitle = data.fixversion;
-						$scope.total = data.items.total;
+						$scope.total = newList.length;
 					}
 				});
 			}
